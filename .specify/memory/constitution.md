@@ -1,50 +1,61 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+<!-- Project Constitution — The Knowledge Extractor -->
 
-## Core Principles
+This document is the authoritative guide for architecture, security, development standards, and non-goals for "The Knowledge Extractor" repository. As a course demo project, clarity and simplicity are prioritized over enterprise scale.
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+## Table of contents
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+- Project Overview
+- Core Tech Stack
+- Architectural Principles
+- Security & Integrity
+- Development Standards
+- Non-Goals & Constraints
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+---
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+## Project Overview
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+"The Knowledge Extractor" is a local-first web application designed to demonstrate the power of Spec-Kit and Gemini 3. It features:
 
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
+- **Local Document Watcher** — reads PDF files from a local `./documents` directory.
+- **AI Content Engine** — extracts text and uses Gemini 3 to generate structured study materials.
+- **Interactive UI** — a React-based flashcard deck and quiz interface with immediate AI feedback.
 
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
+## Core Tech Stack
 
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
+- **Frontend:** React (Vite) with Tailwind CSS and Lucide React icons.
+- **Backend:** Python 3.10+ with FastAPI.
+- **Persistence:** In-memory Python dictionaries or simple local JSON files.
+- **AI Integration:** Gemini 3 Flash (via Google Gen AI SDK).
+- **Validation:** Pydantic v2 for AI response structuring.
 
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
+## Architectural Principles
 
-## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
+- **Local-First:** The application operates entirely on the local machine and does not connect to external databases or cloud storage (other than the Gemini API).
+- **Simplicity over Scale:** Avoid complex folder structures; keep backend logic consolidated (for example, `main.py` for routes, `services.py` for business logic).
+- **Asynchronous AI:** All interactions with the Gemini API must be asynchronous (`async`/`await`) to prevent blocking the UI during generation.
 
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
+## Security & Integrity
 
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+- **No Authentication:** The app is open and requires no login (demo-only constraint).
+- **Secrets Management:** The Gemini API key must be loaded from a `.env` file. Never commit secrets to the repository.
+- **Input Hygiene:** Use Pydantic to validate parsed PDF text before sending it to the LLM.
+
+## Development Standards
+
+- **Testing:** Provide basic unit tests for PDF extraction logic using `pytest`.
+- **Formatting:** Use Prettier for frontend code and `black`/`ruff` for Python.
+- **Documentation:** Include comments that explain why specific Spec-Kit commands were used (for educational purposes).
+
+## Non-Goals & Constraints
+
+- **No Databases:** Do not install or configure MongoDB, PostgreSQL, or SQLite.
+- **No User Accounts:** Do not implement JWT, OAuth, or session cookies.
+- **No Redux:** Use React `useState` and `useContext` instead of Redux.
+- **No Class Components:** Use React hooks only.
+- **No Manual Styling:** All styles must use Tailwind utility classes.
+
+---
+
+**Version:** 1.0.0 (Demo Edition)  •  **Ratified:** 2026-01-09
+
