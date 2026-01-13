@@ -24,7 +24,7 @@
 
 - [X] T001 Create `documents/` folder with placeholder README at documents/README.md
 - [X] T002 [P] Create backend dependencies file at backend/requirements.txt
-- [ ] T003 [P] Initialize frontend Vite + React project at frontend/package.json
+- [X] T003 [P] Initialize frontend Vite + React project at frontend/package.json
 - [ ] T004 [P] Configure Vite with API proxy to backend at frontend/vite.config.js
 - [ ] T005 [P] Configure Tailwind CSS at frontend/tailwind.config.js and frontend/postcss.config.js
 - [ ] T006 [P] Create HTML entry point with fonts at frontend/index.html
