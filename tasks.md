@@ -28,7 +28,7 @@
 - [X] T004 [P] Configure Vite with API proxy to backend at frontend/vite.config.js
 - [X] T005 [P] Configure Tailwind CSS at frontend/tailwind.config.js and frontend/postcss.config.js
 - [X] T006 [P] Create HTML entry point with fonts at frontend/index.html
-- [ ] T007 [P] Create React entry point at frontend/src/main.jsx
+- [X] T007 [P] Create React entry point at frontend/src/main.jsx
 - [ ] T008 [P] Create global styles with Tailwind imports at frontend/src/index.css
 
 **Checkpoint**: Project structure ready, can install dependencies and run dev servers
