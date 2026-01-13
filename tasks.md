@@ -22,7 +22,7 @@
 
 **Purpose**: Project initialization and dependencies
 
-- [ ] T001 Create `documents/` folder with placeholder README at documents/README.md
+- [X] T001 Create `documents/` folder with placeholder README at documents/README.md
 - [ ] T002 [P] Create backend dependencies file at backend/requirements.txt
 - [ ] T003 [P] Initialize frontend Vite + React project at frontend/package.json
 - [ ] T004 [P] Configure Vite with API proxy to backend at frontend/vite.config.js
