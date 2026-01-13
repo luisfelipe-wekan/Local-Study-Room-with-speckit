@@ -26,7 +26,7 @@
 - [X] T002 [P] Create backend dependencies file at backend/requirements.txt
 - [X] T003 [P] Initialize frontend Vite + React project at frontend/package.json
 - [X] T004 [P] Configure Vite with API proxy to backend at frontend/vite.config.js
-- [ ] T005 [P] Configure Tailwind CSS at frontend/tailwind.config.js and frontend/postcss.config.js
+- [X] T005 [P] Configure Tailwind CSS at frontend/tailwind.config.js and frontend/postcss.config.js
 - [ ] T006 [P] Create HTML entry point with fonts at frontend/index.html
 - [ ] T007 [P] Create React entry point at frontend/src/main.jsx
 - [ ] T008 [P] Create global styles with Tailwind imports at frontend/src/index.css
