@@ -42,7 +42,7 @@ Generates a `spec.md` file that documents **what** to build:
 - Success criteria
 
 ```
-/speckit.specify "Build a study aid with flashcards and quizzes..."
+/speckit.specify "Build a local study aid called 'The Knowledge Extractor'. It is a single-page React app with a FastAPI backend. The backend must scan a local './documents' folder for PDFs, extract their text, and use Gemini 3 to generate 10 flashcards and a 10-question quiz based on the content. The Frontend should have a list of detected files, a 'Study Mode' to flip through flashcards, and a 'Quiz Mode' that grades answers and provides AI feedback. Focus only on the text on the pdf, if there are images for now just discard them. If multiple pdfs, just read them all together. For now, no cache memory to save old quizzes."
 ```
 
 ### 2. `/speckit.plan` — Create Implementation Plan
