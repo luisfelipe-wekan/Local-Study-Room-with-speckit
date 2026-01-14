@@ -47,7 +47,7 @@ function FileList() {
     // Loading state
     if (isLoading) {
         return (
-            <div className="card p-8 text-center">
+            <div className="card p-8 text-center animate-pulse">
                 <div className="spinner mx-auto mb-4"></div>
                 <p className="text-parchment-300">Scanning documents folder...</p>
             </div>
@@ -90,31 +90,48 @@ function FileList() {
 
     // Files list
     return (
-        <div className="card">
-            <div className="p-4 border-b border-ink-700 flex items-center justify-between">
-                <h3 className="text-lg font-semibold text-parchment-100">
-                    Documents ({files.length})
-                </h3>
+        <div className="card overflow-hidden">
+            {/* Header */}
+            <div className="p-4 border-b border-ink-700 flex items-center justify-between bg-ink-800/50">
+                <div className="flex items-center gap-3">
+                    <FolderOpen className="w-5 h-5 text-amber-500" />
+                    <h3 className="text-lg font-semibold text-parchment-100">
+                        Documents
+                    </h3>
+                    <span className="px-2 py-0.5 text-xs font-mono bg-ink-700 text-parchment-300 rounded-full">
+                        {files.length} PDF{files.length !== 1 ? "s" : ""}
+                    </span>
+                </div>
                 <button
                     onClick={loadFiles}
-                    className="text-parchment-300 hover:text-parchment-100 transition-colors"
+                    className="p-2 text-parchment-300 hover:text-amber-500 hover:bg-ink-700 rounded-lg transition-all"
                     title="Refresh file list"
                 >
                     <RefreshCw className="w-4 h-4" />
                 </button>
             </div>
-            <ul className="divide-y divide-ink-700">
+
+            {/* File List */}
+            <ul className="divide-y divide-ink-700/50">
                 {files.map((file, index) => (
                     <li
                         key={index}
-                        className="p-4 flex items-center gap-4 hover:bg-ink-700/50 transition-colors"
+                        className="p-4 flex items-center gap-4 hover:bg-ink-700/30 transition-all duration-200 group"
                     >
-                        <FileText className="w-8 h-8 text-amber-500 flex-shrink-0" />
+                        {/* PDF Icon */}
+                        <div className="relative flex-shrink-0">
+                            <FileText className="w-10 h-10 text-crimson-400 group-hover:text-crimson-500 transition-colors" />
+                            <span className="absolute -bottom-1 -right-1 px-1.5 py-0.5 text-[10px] font-mono font-bold bg-crimson-500 text-white rounded">
+                                PDF
+                            </span>
+                        </div>
+
+                        {/* File Info */}
                         <div className="flex-1 min-w-0">
-                            <p className="text-parchment-100 font-medium truncate">
+                            <p className="text-parchment-100 font-medium truncate group-hover:text-amber-500 transition-colors">
                                 {file.name}
                             </p>
-                            <p className="text-parchment-300 text-sm">
+                            <p className="text-parchment-300/70 text-sm font-mono">
                                 {formatFileSize(file.size)}
                             </p>
                         </div>
