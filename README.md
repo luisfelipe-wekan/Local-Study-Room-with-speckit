@@ -197,6 +197,89 @@ npm run dev
 
 ---
 
+## Phase 2 Checkpoint: Foundational Logic
+
+Once Phase 2 (Tasks T011-T018) is complete, verify the core backend and frontend logic is in place.
+
+### 1. Git History Audit
+
+Verify the foundational tasks were built incrementally.
+
+```bash
+git log -n 8 --oneline
+```
+
+**Success Criteria:** You should see commits for T011 through T018, each building on the previous.
+
+### 2. Backend API & Models
+
+Check that the API documentation now shows specific schemas.
+
+```bash
+cd backend
+uvicorn main:app --reload --port 8000
+```
+
+Visit http://127.0.0.1:8000/docs and verify:
+- [ ] `FileInfo`, `Flashcard`, `QuizQuestion`, `GradedAnswer` models appear in Schemas section
+- [ ] `/health`, `/api/files`, `/api/flashcards`, `/api/quiz`, `/api/quiz/grade` endpoints are listed
+- [ ] `/api/files` returns `200 OK` (empty list if no PDFs in `./documents`)
+
+### 3. PDF Extraction Logic
+
+Verify the PDF parsing library imports correctly.
+
+```bash
+cd backend
+python -c "from tools import extract_text_from_pdf, scan_all_pdfs; print('PDF tools OK')"
+```
+
+**Success Criteria:** No import errors. Output shows "PDF tools OK".
+
+### 4. AI Service Readiness
+
+Verify Gemini client configuration.
+
+```bash
+cd backend
+python -c "from tools import get_gemini_model; m = get_gemini_model(); print('Gemini OK' if m else 'No API key')"
+```
+
+**Success Criteria:** 
+- [ ] If `GEMINI_API_KEY` is in `.env`: Output shows "Gemini OK"
+- [ ] If no key yet: Output shows "No API key" (expected, add key before Phase 4)
+
+### 5. Frontend Architecture
+
+Verify the React app has view state management.
+
+```bash
+cd frontend
+npm run dev
+```
+
+Visit http://localhost:5173 and verify:
+- [ ] Header with "The Knowledge Extractor" title displays
+- [ ] "Study Mode" and "Quiz Mode" buttons are visible
+- [ ] Clicking buttons changes the view (placeholder content is fine)
+- [ ] "Home" button appears when not on home view
+
+### 6. Backend File Structure
+
+Verify separation of concerns in backend:
+
+```bash
+ls -la backend/*.py
+```
+
+**Success Criteria:** You should see:
+- `main.py` — App initialization only
+- `routes.py` — API endpoint handlers
+- `responses.py` — Pydantic models
+- `tools.py` — Utility functions
+
+---
+
 ## Quick Start
 
 ### Prerequisites
