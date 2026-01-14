@@ -44,7 +44,7 @@
 **⚠️ CRITICAL**: No user story work can begin until this phase is complete
 
 - [X] T011 Implement PDF text extraction function using pypdf in backend/tools.py
-- [ ] T012 Implement combined PDF scanner that reads all PDFs from documents/ in backend/tools.py
+- [X] T012 Implement combined PDF scanner that reads all PDFs from documents/ in backend/tools.py
 - [ ] T013 Configure Gemini client with API key from .env in backend/tools.py
 - [ ] T014 Implement JSON response parser for Gemini output in backend/tools.py
 - [ ] T015 Add CORS middleware and health check endpoint in backend/main.py
