@@ -357,6 +357,263 @@ Verify the app handles missing documents gracefully.
 
 ---
 
+## Phase 4 Checkpoint: Study Mode (Flashcards)
+
+**Milestone:** AI-powered flashcard generation and interactive study interface
+
+This checkpoint validates Tasks T023-T030 — the complete flashcard user story.
+
+### 1. Git Audit
+
+Verify clean commit trail for Phase 4 tasks.
+
+```bash
+cd /home/luis/speckit4/studyroom4
+git log -n 8 --oneline
+```
+
+**Success Criteria:**
+- [ ] Commits for T023 through T030 appear in order
+- [ ] Each commit message follows format: `implement TXXX - <description>`
+- [ ] No merge conflicts or reverts visible
+
+### 2. AI Payload Test
+
+Test the backend's Gemini integration for flashcard generation.
+
+### Prerequisites
+```bash
+# Ensure you have a PDF in the documents folder
+ls -la documents/*.pdf
+
+# Verify your API key is set
+cat backend/.env | grep GEMINI_API_KEY
+```
+
+### Test the Endpoint
+
+**Option A: Via curl**
+```bash
+curl http://127.0.0.1:8000/api/flashcards
+```
+
+**Option B: Via Swagger UI**
+1. Open http://127.0.0.1:8000/docs
+2. Expand `GET /api/flashcards`
+3. Click "Try it out" → "Execute"
+
+### Check Backend Logs
+
+Watch the terminal where `uvicorn` is running. You should see:
+- Text being extracted from PDF(s)
+- Request sent to Gemini API
+- JSON response parsed successfully
+
+**Success Criteria:**
+- [ ] No "JSON Parsing" errors in terminal
+- [ ] Response returns HTTP 200
+- [ ] Response contains exactly 10 flashcard objects
+- [ ] Each flashcard has `front` and `back` fields
+
+### 3. Interactive UI Check
+
+Test the flashcard user interface.
+
+### Launch Both Servers
+```bash
+# Terminal 1 - Backend
+cd backend && uvicorn main:app --reload --port 8000
+
+# Terminal 2 - Frontend
+cd frontend && npm run dev
+```
+
+### Test Flow
+1. Open http://localhost:5173
+2. Verify PDFs appear in the Documents list
+3. Click **"Study Mode"** button
+
+**Success Criteria:**
+
+| Check | Expected Behavior |
+|-------|-------------------|
+| Card Count | Exactly **10 cards** displayed (progress shows "Card 1 of 10") |
+| Flip Animation | Click card → **3D flip** reveals answer on back |
+| Next Button | Advances to next card, resets flip state |
+| Previous Button | Goes back, works correctly at card 2+ |
+| Keyboard Nav | `←` `→` arrows navigate; `Space`/`Enter` flips |
+| Progress Bar | Visual bar updates as you navigate |
+| Loading State | Spinner + "Generating flashcards..." shown during API call |
+
+### 4. AI Grounding Check
+
+Verify the AI generates contextually relevant content.
+
+### Test Procedure
+1. Open one of your PDFs and note a specific topic/term
+2. Generate flashcards in the app
+3. Browse through all 10 cards
+
+**Success Criteria:**
+- [ ] At least **8 of 10** flashcards relate to your PDF content
+- [ ] Questions/terms on front are coherent and specific
+- [ ] Answers/definitions on back are accurate to the source
+- [ ] No hallucinated content unrelated to the document
+
+### 5. Error Handling Check
+
+Test graceful failure modes.
+
+### No PDFs Test
+```bash
+# Move PDFs out temporarily
+mkdir documents/backup
+mv documents/*.pdf documents/backup/
+
+# Try generating flashcards
+curl http://127.0.0.1:8000/api/flashcards
+```
+
+**Success Criteria:**
+- [ ] Returns HTTP 404 with message "No PDF documents found"
+- [ ] UI shows error state with retry option
+
+### Restore PDFs
+```bash
+mv documents/backup/*.pdf documents/
+rmdir documents/backup
+```
+
+### Phase 4 Complete Checklist
+
+| # | Verification | Status |
+|---|--------------|--------|
+| 1 | Git log shows T023-T030 commits | ⬜ |
+| 2 | `/api/flashcards` returns 10 cards | ⬜ |
+| 3 | No JSON parsing errors in logs | ⬜ |
+| 4 | Card flip animation works | ⬜ |
+| 5 | Navigation (buttons + keyboard) works | ⬜ |
+| 6 | Content is grounded in PDF | ⬜ |
+| 7 | Error states handled gracefully | ⬜ |
+
+**When all boxes are checked, Phase 4: Study Mode is verified!** 🎓
+
+---
+
+## Phase 5 Checkpoint: Quiz Mode & AI Feedback
+
+**Final Feature Verification:** Interactive quiz engine with AI-powered grading
+
+This checkpoint validates Tasks T031-T041 — the complete quiz user story.
+
+### 1. Git Audit
+
+Verify clean commit trail for Phase 5 tasks.
+
+```bash
+cd /home/luis/speckit4/studyroom4
+git log -n 11 --oneline
+```
+
+**Success Criteria:**
+- [ ] Commits for T031 through T041 appear in sequence
+- [ ] Each commit message follows format: `implement TXXX - <description>`
+- [ ] No merge conflicts or reverts visible
+
+### 2. Quiz Generation Test
+
+Verify the backend generates properly structured quiz questions.
+
+**Prerequisites:**
+- Backend running (`uvicorn main:app --reload --port 8000`)
+- At least one PDF in `./documents`
+
+**Test Steps:**
+1. Open the app at http://localhost:5173
+2. Click **"Quiz Mode"**
+3. Open browser DevTools → Network tab
+4. Observe the `/api/quiz` request
+
+**Success Criteria:**
+- [ ] Response returns HTTP 200
+- [ ] Response contains exactly **10 questions**
+- [ ] Each question has `question`, `options` (array of 4), and `correct_index` (0-3)
+- [ ] JSON matches the `QuizQuestion` schema from `backend/responses.py`
+
+### 3. Interactive Engine Check
+
+Test the quiz interaction and feedback system.
+
+#### 3.1 Progress Tracking
+
+1. Start a new quiz
+2. Answer 3-4 questions
+
+**Success Criteria:**
+- [ ] Progress bar updates as questions are answered
+- [ ] Counter shows "X of 10 answered"
+- [ ] Selected options are highlighted in amber
+
+#### 3.2 Feedback Logic
+
+1. Intentionally select a **wrong answer** for at least one question
+2. Submit the quiz
+
+**Success Criteria:**
+- [ ] Incorrect answers are highlighted in **red** with ✗ icon
+- [ ] Correct answers are highlighted in **green** with ✓ icon
+- [ ] AI-generated feedback appears below each question
+- [ ] Feedback for wrong answers explains **why** the correct answer is right
+- [ ] Feedback content is grounded in the PDF (not generic)
+
+### 4. Result Summary
+
+Complete a full quiz and verify the summary screen.
+
+**Test Steps:**
+1. Answer all 10 questions
+2. Click "Submit Quiz"
+3. Review the results screen
+
+**Success Criteria:**
+- [ ] Trophy icon and "Quiz Complete!" message displayed
+- [ ] Score shown as **X / 10** format
+- [ ] Percentage displayed with color coding:
+  - Green (≥70%) | Amber (50-69%) | Red (<50%)
+- [ ] All 10 questions visible with feedback
+- [ ] "Take New Quiz" button appears
+
+### 5. State Reset
+
+Verify that starting a new quiz resets all state.
+
+**Test Steps:**
+1. After completing a quiz, click "Take New Quiz"
+2. Alternatively, click "Home" → select different PDF → "Quiz Mode"
+
+**Success Criteria:**
+- [ ] Score resets to 0
+- [ ] All answer selections cleared
+- [ ] New questions generated (not cached)
+- [ ] Progress bar resets to empty
+- [ ] No stale feedback from previous quiz
+
+### Phase 5 Complete Checklist
+
+| # | Verification | Status |
+|---|--------------|--------|
+| 1 | Git log shows T031-T041 commits | ⬜ |
+| 2 | `/api/quiz` returns 10 valid questions | ⬜ |
+| 3 | Progress tracking works correctly | ⬜ |
+| 4 | Wrong answers show AI explanations | ⬜ |
+| 5 | Score summary displays correctly | ⬜ |
+| 6 | "Take New Quiz" resets all state | ⬜ |
+| 7 | Feedback is grounded in PDF content | ⬜ |
+
+**When all boxes are checked, Phase 5: Quiz Mode is verified!** 🎓
+
+---
+
 ## Quick Start
 
 ### Prerequisites
