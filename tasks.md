@@ -30,8 +30,8 @@
 - [X] T006 [P] Create HTML entry point with fonts at frontend/index.html
 - [X] T007 [P] Create React entry point at frontend/src/main.jsx
 - [X] T008 [P] Create global styles with Tailwind imports at frontend/src/index.css
-- [X] T008a [P] Create FastAPI app skeleton with basic health endpoint at backend/main.py
-- [X] T008b [P] Create React App shell placeholder at frontend/src/App.jsx
+- [X] T009 [P] Create FastAPI app skeleton with basic health endpoint at backend/main.py
+- [X] T010 [P] Create React App shell placeholder at frontend/src/App.jsx
 
 **Checkpoint**: Project structure ready, can install dependencies and run dev servers
 
@@ -43,13 +43,13 @@
 
 **⚠️ CRITICAL**: No user story work can begin until this phase is complete
 
-- [ ] T009 Implement PDF text extraction function using PyMuPDF in backend/main.py
-- [ ] T010 Implement combined PDF scanner that reads all PDFs from documents/ in backend/main.py
-- [ ] T011 Configure Gemini client with API key from .env in backend/main.py
-- [ ] T012 Implement JSON response parser for Gemini output in backend/main.py
-- [ ] T013 Add CORS middleware and health check endpoint in backend/main.py
-- [ ] T014 Create App shell with view state management (home/study/quiz) in frontend/src/App.jsx
-- [ ] T015 Create API utility functions (fetchFiles, fetchFlashcards, fetchQuiz, submitQuiz) in frontend/src/api.js
+- [ ] T011 Implement PDF text extraction function using pypdf in backend/main.py
+- [ ] T012 Implement combined PDF scanner that reads all PDFs from documents/ in backend/main.py
+- [ ] T013 Configure Gemini client with API key from .env in backend/main.py
+- [ ] T014 Implement JSON response parser for Gemini output in backend/main.py
+- [ ] T015 Add CORS middleware and health check endpoint in backend/main.py
+- [ ] T016 Create App shell with view state management (home/study/quiz) in frontend/src/App.jsx
+- [ ] T017 Create API utility functions (fetchFiles, fetchFlashcards, fetchQuiz, submitQuiz) in frontend/src/api.js
 
 **Checkpoint**: Backend can extract PDFs and call Gemini; Frontend can switch views and call API
 
@@ -63,10 +63,10 @@
 
 ### Implementation for User Story 1
 
-- [ ] T016 [US1] Implement GET /api/files endpoint returning PDF metadata in backend/main.py
-- [ ] T017 [US1] Create FileList component with loading and empty states in frontend/src/components/FileList.jsx
-- [ ] T018 [US1] Integrate FileList into App home view in frontend/src/App.jsx
-- [ ] T019 [US1] Style FileList with Tailwind (file icons, sizes, dark theme) in frontend/src/components/FileList.jsx
+- [ ] T018 [US1] Implement GET /api/files endpoint returning PDF metadata in backend/main.py
+- [ ] T019 [US1] Create FileList component with loading and empty states in frontend/src/components/FileList.jsx
+- [ ] T020 [US1] Integrate FileList into App home view in frontend/src/App.jsx
+- [ ] T021 [US1] Style FileList with Tailwind (file icons, sizes, dark theme) in frontend/src/components/FileList.jsx
 
 **Checkpoint**: User Story 1 complete — App displays detected PDFs
 
@@ -80,14 +80,14 @@
 
 ### Implementation for User Story 2
 
-- [ ] T020 [US2] Implement generate_flashcards_with_gemini async function in backend/main.py
-- [ ] T021 [US2] Implement GET /api/flashcards endpoint in backend/main.py
-- [ ] T022 [US2] Create Flashcard component with flip animation (CSS 3D transform) in frontend/src/components/Flashcard.jsx
-- [ ] T023 [US2] Add flashcard state management (currentIndex, isFlipped, cards array) in frontend/src/components/Flashcard.jsx
-- [ ] T024 [US2] Implement Previous/Next navigation with progress indicator in frontend/src/components/Flashcard.jsx
-- [ ] T025 [US2] Add keyboard arrow support for navigation in frontend/src/components/Flashcard.jsx
-- [ ] T026 [US2] Integrate Flashcard into App study view with loading state in frontend/src/App.jsx
-- [ ] T027 [US2] Style Flashcard with Tailwind (card appearance, flip effect, buttons) in frontend/src/components/Flashcard.jsx
+- [ ] T022 [US2] Implement generate_flashcards_with_gemini async function in backend/main.py
+- [ ] T023 [US2] Implement GET /api/flashcards endpoint in backend/main.py
+- [ ] T024 [US2] Create Flashcard component with flip animation (CSS 3D transform) in frontend/src/components/Flashcard.jsx
+- [ ] T025 [US2] Add flashcard state management (currentIndex, isFlipped, cards array) in frontend/src/components/Flashcard.jsx
+- [ ] T026 [US2] Implement Previous/Next navigation with progress indicator in frontend/src/components/Flashcard.jsx
+- [ ] T027 [US2] Add keyboard arrow support for navigation in frontend/src/components/Flashcard.jsx
+- [ ] T028 [US2] Integrate Flashcard into App study view with loading state in frontend/src/App.jsx
+- [ ] T029 [US2] Style Flashcard with Tailwind (card appearance, flip effect, buttons) in frontend/src/components/Flashcard.jsx
 
 **Checkpoint**: User Story 2 complete — Flashcards generate and flip correctly
 
@@ -101,17 +101,17 @@
 
 ### Implementation for User Story 3
 
-- [ ] T028 [US3] Implement generate_quiz_with_gemini async function in backend/main.py
-- [ ] T029 [US3] Implement GET /api/quiz endpoint in backend/main.py
-- [ ] T030 [US3] Implement grade_answer_with_gemini async function for AI feedback in backend/main.py
-- [ ] T031 [US3] Implement POST /api/quiz/grade endpoint with Pydantic models in backend/main.py
-- [ ] T032 [US3] Create Quiz component displaying all 10 questions with radio options in frontend/src/components/Quiz.jsx
-- [ ] T033 [US3] Add quiz state management (questions, answers, submitted, results) in frontend/src/components/Quiz.jsx
-- [ ] T034 [US3] Implement answer selection with visual feedback in frontend/src/components/Quiz.jsx
-- [ ] T035 [US3] Implement submit button and results display (score, percentage) in frontend/src/components/Quiz.jsx
-- [ ] T036 [US3] Display per-question feedback with correct/incorrect indicators in frontend/src/components/Quiz.jsx
-- [ ] T037 [US3] Integrate Quiz into App quiz view with loading state in frontend/src/App.jsx
-- [ ] T038 [US3] Style Quiz with Tailwind (question cards, options, feedback colors) in frontend/src/components/Quiz.jsx
+- [ ] T030 [US3] Implement generate_quiz_with_gemini async function in backend/main.py
+- [ ] T031 [US3] Implement GET /api/quiz endpoint in backend/main.py
+- [ ] T032 [US3] Implement grade_answer_with_gemini async function for AI feedback in backend/main.py
+- [ ] T033 [US3] Implement POST /api/quiz/grade endpoint with Pydantic models in backend/main.py
+- [ ] T034 [US3] Create Quiz component displaying all 10 questions with radio options in frontend/src/components/Quiz.jsx
+- [ ] T035 [US3] Add quiz state management (questions, answers, submitted, results) in frontend/src/components/Quiz.jsx
+- [ ] T036 [US3] Implement answer selection with visual feedback in frontend/src/components/Quiz.jsx
+- [ ] T037 [US3] Implement submit button and results display (score, percentage) in frontend/src/components/Quiz.jsx
+- [ ] T038 [US3] Display per-question feedback with correct/incorrect indicators in frontend/src/components/Quiz.jsx
+- [ ] T039 [US3] Integrate Quiz into App quiz view with loading state in frontend/src/App.jsx
+- [ ] T040 [US3] Style Quiz with Tailwind (question cards, options, feedback colors) in frontend/src/components/Quiz.jsx
 
 **Checkpoint**: User Story 3 complete — Full quiz flow works with AI grading
 
@@ -121,11 +121,11 @@
 
 **Purpose**: Error handling, UX improvements, final touches
 
-- [ ] T039 [P] Add error states with retry buttons for all API calls in frontend/src/App.jsx
-- [ ] T040 [P] Add loading spinners/skeletons for async operations in frontend/src/index.css
-- [ ] T041 [P] Ensure responsive design for mobile in all components
-- [ ] T042 [P] Add "Back to Home" navigation from Study and Quiz modes in frontend/src/App.jsx
-- [ ] T043 Verify all success criteria from spec.md pass
+- [ ] T041 [P] Add error states with retry buttons for all API calls in frontend/src/App.jsx
+- [ ] T042 [P] Add loading spinners/skeletons for async operations in frontend/src/index.css
+- [ ] T043 [P] Ensure responsive design for mobile in all components
+- [ ] T044 [P] Add "Back to Home" navigation from Study and Quiz modes in frontend/src/App.jsx
+- [ ] T045 Verify all success criteria from spec.md pass
 
 ---
 
@@ -150,14 +150,14 @@
 
 **Setup Phase (all [P] tasks):**
 ```
-T002, T003, T004, T005, T006, T007, T008 — all in parallel
+T002, T003, T004, T005, T006, T007, T008, T009, T010 — all in parallel
 ```
 
 **After Foundational — User Stories can proceed in parallel:**
 ```
-Developer A: US1 (T016-T019)
-Developer B: US2 (T020-T027)  
-Developer C: US3 (T028-T038)
+Developer A: US1 (T018-T021)
+Developer B: US2 (T022-T029)  
+Developer C: US3 (T030-T040)
 ```
 
 ---
@@ -186,14 +186,13 @@ Developer C: US3 (T028-T038)
 
 | Phase | Task Count | Parallel Tasks |
 |-------|------------|----------------|
-| Phase 1: Setup | 8 | 7 |
+| Phase 1: Setup | 10 | 9 |
 | Phase 2: Foundational | 7 | 0 |
 | Phase 3: US1 | 4 | 0 |
 | Phase 4: US2 | 8 | 0 |
 | Phase 5: US3 | 11 | 0 |
 | Phase 6: Polish | 5 | 4 |
-| **Total** | **43** | **11** |
+| **Total** | **45** | **13** |
 
-**MVP Scope**: Phases 1-3 (19 tasks) → View detected PDFs  
-**Full App**: All phases (43 tasks) → Complete study experience
-
+**MVP Scope**: Phases 1-3 (21 tasks) → View detected PDFs  
+**Full App**: All phases (45 tasks) → Complete study experience
