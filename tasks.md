@@ -111,7 +111,7 @@
 - [X] T037 [US3] Implement answer selection with visual feedback in frontend/src/components/Quiz.jsx
 - [X] T038 [US3] Implement submit button and results display (score, percentage) in frontend/src/components/Quiz.jsx
 - [X] T039 [US3] Display per-question feedback with correct/incorrect indicators in frontend/src/components/Quiz.jsx
-- [ ] T040 [US3] Integrate Quiz into App quiz view with loading state in frontend/src/App.jsx
+- [X] T040 [US3] Integrate Quiz into App quiz view with loading state in frontend/src/App.jsx
 - [ ] T041 [US3] Style Quiz with Tailwind (question cards, options, feedback colors) in frontend/src/components/Quiz.jsx
 
 **Checkpoint**: User Story 3 complete — Full quiz flow works with AI grading

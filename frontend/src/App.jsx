@@ -7,6 +7,7 @@ import { useState } from "react";
 import { BookOpen, Brain, Home } from "lucide-react";
 import FileList from "./components/FileList";
 import Flashcard from "./components/Flashcard";
+import Quiz from "./components/Quiz";
 
 // View constants
 const VIEWS = {
@@ -83,10 +84,11 @@ function App() {
 
             case VIEWS.QUIZ:
                 return (
-                    <div className="text-center">
-                        <p className="text-parchment-300">
-                            Quiz component will be integrated here in Phase 5.
-                        </p>
+                    <div>
+                        <h2 className="text-2xl font-semibold text-parchment-100 text-center mb-8">
+                            🧠 Quiz Mode
+                        </h2>
+                        <Quiz />
                     </div>
                 );
 
