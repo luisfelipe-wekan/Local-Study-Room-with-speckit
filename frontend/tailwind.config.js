@@ -13,6 +13,7 @@ export default {
                     800: '#1a1a1a',
                     700: '#2a2a2a',
                     600: '#3a3a3a',
+                    500: '#4a4a4a',
                 },
                 'parchment': {
                     100: '#faf8f5',
