@@ -306,3 +306,124 @@ Generate 10 quiz questions as a JSON array:"""
     except Exception as e:
         print(f"Error generating quiz: {e}")
         raise
+
+
+async def grade_quiz_with_gemini(answers: List[dict]) -> List[dict]:
+    """
+    Grade quiz answers and provide AI-generated feedback for each question.
+
+    Args:
+        answers: List of answer dicts with 'question', 'options', 'correct_index',
+                 'selected_index', and 'question_index'
+
+    Returns:
+        List of graded answer dicts with 'question_index', 'is_correct', and 'feedback'
+    """
+    model = get_gemini_model()
+    if not model:
+        raise ValueError(
+            "Gemini API key not configured. Set GEMINI_API_KEY in .env file."
+        )
+
+    # Build context for grading
+    grading_context = []
+    for ans in answers:
+        is_correct = ans["selected_index"] == ans["correct_index"]
+        correct_answer = ans["options"][ans["correct_index"]]
+        selected_answer = ans["options"][ans["selected_index"]]
+        grading_context.append(
+            {
+                "question_index": ans["question_index"],
+                "question": ans["question"],
+                "correct_answer": correct_answer,
+                "selected_answer": selected_answer,
+                "is_correct": is_correct,
+            }
+        )
+
+    prompt = f"""You are grading a quiz. For each question, provide brief, helpful feedback.
+
+For correct answers: Acknowledge correctness and optionally add a reinforcing fact.
+For incorrect answers: Explain why the correct answer is right (1-2 sentences max).
+
+Quiz answers to grade:
+{json.dumps(grading_context, indent=2)}
+
+Return ONLY a valid JSON array with feedback for each question. Example format:
+[
+  {{"question_index": 0, "is_correct": true, "feedback": "Correct! Well done."}},
+  {{"question_index": 1, "is_correct": false, "feedback": "The correct answer is X because..."}}
+]
+
+Generate feedback as a JSON array:"""
+
+    try:
+        response = await model.generate_content_async(prompt)
+        result = parse_json_response(response.text)
+
+        if not result or not isinstance(result, list):
+            # Fallback: generate basic feedback without AI
+            return [
+                {
+                    "question_index": ctx["question_index"],
+                    "is_correct": ctx["is_correct"],
+                    "feedback": (
+                        "Correct!"
+                        if ctx["is_correct"]
+                        else f"Incorrect. The correct answer was: {ctx['correct_answer']}"
+                    ),
+                }
+                for ctx in grading_context
+            ]
+
+        # Validate and clean the feedback
+        graded = []
+        for item in result:
+            if (
+                isinstance(item, dict)
+                and "question_index" in item
+                and "is_correct" in item
+                and "feedback" in item
+            ):
+                graded.append(
+                    {
+                        "question_index": int(item["question_index"]),
+                        "is_correct": bool(item["is_correct"]),
+                        "feedback": str(item["feedback"]).strip(),
+                    }
+                )
+
+        # If AI response is incomplete, fill in missing with fallback
+        if len(graded) < len(answers):
+            existing_indices = {g["question_index"] for g in graded}
+            for ctx in grading_context:
+                if ctx["question_index"] not in existing_indices:
+                    graded.append(
+                        {
+                            "question_index": ctx["question_index"],
+                            "is_correct": ctx["is_correct"],
+                            "feedback": (
+                                "Correct!"
+                                if ctx["is_correct"]
+                                else f"Incorrect. The correct answer was: {ctx['correct_answer']}"
+                            ),
+                        }
+                    )
+
+        return sorted(graded, key=lambda x: x["question_index"])
+
+    except Exception as e:
+        print(f"Error grading quiz: {e}")
+        # Fallback grading without AI feedback
+        return [
+            {
+                "question_index": ctx["question_index"],
+                "is_correct": ctx["is_correct"],
+                "feedback": (
+                    "Correct!"
+                    if ctx["is_correct"]
+                    else f"Incorrect. The correct answer was: {ctx['correct_answer']}"
+                ),
+            }
+            for ctx in grading_context
+        ]
