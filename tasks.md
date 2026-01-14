@@ -43,10 +43,10 @@
 
 **⚠️ CRITICAL**: No user story work can begin until this phase is complete
 
-- [ ] T011 Implement PDF text extraction function using pypdf in backend/main.py
-- [ ] T012 Implement combined PDF scanner that reads all PDFs from documents/ in backend/main.py
-- [ ] T013 Configure Gemini client with API key from .env in backend/main.py
-- [ ] T014 Implement JSON response parser for Gemini output in backend/main.py
+- [X] T011 Implement PDF text extraction function using pypdf in backend/tools.py
+- [ ] T012 Implement combined PDF scanner that reads all PDFs from documents/ in backend/tools.py
+- [ ] T013 Configure Gemini client with API key from .env in backend/tools.py
+- [ ] T014 Implement JSON response parser for Gemini output in backend/tools.py
 - [ ] T015 Add CORS middleware and health check endpoint in backend/main.py
 - [ ] T016 Create App shell with view state management (home/study/quiz) in frontend/src/App.jsx
 - [ ] T017 Create API utility functions (fetchFiles, fetchFlashcards, fetchQuiz, submitQuiz) in frontend/src/api.js

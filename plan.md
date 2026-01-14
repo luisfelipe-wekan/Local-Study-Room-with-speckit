@@ -89,20 +89,22 @@ After submission, each question shows a colored indicator (green/red) and the AI
 
 ```
 backend/
-├── main.py          # Routes + Gemini logic (keeping simple per constitution)
+├── main.py          # FastAPI routes and endpoints
+├── tools.py         # Utility functions (PDF extraction, Gemini helpers)
 ├── requirements.txt
 └── .env             # API key
 
 frontend/
 ├── src/
 │   ├── App.jsx      # Main shell + view routing
+│   ├── api.js       # API utility functions
 │   ├── components/  # FileList, Flashcard, Quiz
 │   └── index.css    # Tailwind imports + custom styles
 ├── index.html
 └── vite.config.js   # Proxy /api to backend
 ```
 
-I'm consolidating backend logic into `main.py` rather than splitting into `services.py` — the constitution says to avoid complex folder structures, and the total code will be ~200 lines.
+Backend is split into two files: `main.py` for routes/endpoints and `tools.py` for reusable utility functions (PDF extraction, Gemini client, JSON parsing). This keeps the codebase organized while remaining simple.
 
 ---
 
