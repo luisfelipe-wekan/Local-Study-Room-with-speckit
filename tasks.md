@@ -83,10 +83,10 @@
 
 - [X] T023 [US2] Implement generate_flashcards_with_gemini async function in backend/tools.py
 - [X] T024 [US2] Implement GET /api/flashcards endpoint in backend/routes.py
-- [ ] T025 [US2] Create Flashcard component with flip animation (CSS 3D transform) in frontend/src/components/Flashcard.jsx
-- [ ] T026 [US2] Add flashcard state management (currentIndex, isFlipped, cards array) in frontend/src/components/Flashcard.jsx
-- [ ] T027 [US2] Implement Previous/Next navigation with progress indicator in frontend/src/components/Flashcard.jsx
-- [ ] T028 [US2] Add keyboard arrow support for navigation in frontend/src/components/Flashcard.jsx
+- [X] T025 [US2] Create Flashcard component with flip animation (CSS 3D transform) in frontend/src/components/Flashcard.jsx
+- [X] T026 [US2] Add flashcard state management (currentIndex, isFlipped, cards array) in frontend/src/components/Flashcard.jsx
+- [X] T027 [US2] Implement Previous/Next navigation with progress indicator in frontend/src/components/Flashcard.jsx
+- [X] T028 [US2] Add keyboard arrow support for navigation in frontend/src/components/Flashcard.jsx
 - [ ] T029 [US2] Integrate Flashcard into App study view with loading state in frontend/src/App.jsx
 - [ ] T030 [US2] Style Flashcard with Tailwind (card appearance, flip effect, buttons) in frontend/src/components/Flashcard.jsx
 
