@@ -89,7 +89,9 @@ After submission, each question shows a colored indicator (green/red) and the AI
 
 ```
 backend/
-├── main.py          # FastAPI routes and endpoints
+├── main.py          # FastAPI app initialization and CORS config
+├── routes.py        # API route handlers
+├── responses.py     # Pydantic models for request/response validation
 ├── tools.py         # Utility functions (PDF extraction, Gemini helpers)
 ├── requirements.txt
 └── .env             # API key
@@ -104,7 +106,11 @@ frontend/
 └── vite.config.js   # Proxy /api to backend
 ```
 
-Backend is split into two files: `main.py` for routes/endpoints and `tools.py` for reusable utility functions (PDF extraction, Gemini client, JSON parsing). This keeps the codebase organized while remaining simple.
+Backend is split into four files for clean separation of concerns:
+- `main.py` — App initialization, middleware, router inclusion
+- `routes.py` — API endpoint handlers
+- `responses.py` — Pydantic models for validation
+- `tools.py` — Reusable utilities (PDF extraction, Gemini client, JSON parsing)
 
 ---
 

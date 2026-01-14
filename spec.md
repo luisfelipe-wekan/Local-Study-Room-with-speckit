@@ -51,10 +51,17 @@
 - Async/await for all Gemini API calls
 - Load API key from `.env` file
 
+**Architecture (Separation of Concerns):**
+- `main.py` — App initialization, middleware, router inclusion only
+- `routes.py` — All API endpoint handlers (using FastAPI's APIRouter)
+- `responses.py` — Pydantic models for request/response validation
+- `tools.py` — Utility functions (PDF extraction, Gemini client, JSON parsing)
+
 ### API Endpoints
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
+| GET | `/health` | Health check to verify server is running |
 | GET | `/api/files` | List all PDFs in the documents folder |
 | GET | `/api/flashcards` | Generate 10 flashcards from PDF content |
 | GET | `/api/quiz` | Generate 10-question quiz from PDF content |
@@ -150,23 +157,28 @@ Per the project constitution:
 studyroom4/
 ├── documents/           # User places PDFs here
 ├── backend/
-│   ├── main.py          # FastAPI routes
-│   ├── services.py      # Business logic (PDF extraction, Gemini calls)
+│   ├── main.py          # App initialization, middleware, router inclusion
+│   ├── routes.py        # API endpoint handlers
+│   ├── responses.py     # Pydantic models for validation
+│   ├── tools.py         # Utility functions (PDF, Gemini, parsing)
 │   ├── requirements.txt
 │   └── .env             # GEMINI_API_KEY
 ├── frontend/
 │   ├── src/
-│   │   ├── App.jsx
-│   │   ├── main.jsx
+│   │   ├── App.jsx      # Main shell + view routing
+│   │   ├── main.jsx     # React entry point
+│   │   ├── api.js       # API utility functions
 │   │   ├── components/
 │   │   │   ├── FileList.jsx
 │   │   │   ├── Flashcard.jsx
 │   │   │   └── Quiz.jsx
-│   │   └── index.css
+│   │   └── index.css    # Tailwind imports + custom styles
 │   ├── index.html
 │   ├── package.json
 │   └── vite.config.js
-└── spec.md              # This file
+├── spec.md              # What to build
+├── plan.md              # How to build it
+└── tasks.md             # Task checklist
 ```
 
 ---

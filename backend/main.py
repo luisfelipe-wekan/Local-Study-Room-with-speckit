@@ -2,10 +2,15 @@
 The Knowledge Extractor - FastAPI Backend
 A local-first study aid that extracts text from PDFs and generates
 flashcards and quizzes using Gemini AI.
+
+This file handles app initialization and middleware configuration.
+Routes are defined in routes.py, models in responses.py.
 """
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+
+from routes import health_router, router
 
 # Initialize FastAPI app
 app = FastAPI(
@@ -23,8 +28,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-
-@app.get("/health")
-async def health_check():
-    """Health check endpoint to verify the server is running."""
-    return {"status": "healthy", "service": "knowledge-extractor"}
+# Include routers
+app.include_router(health_router)
+app.include_router(router)

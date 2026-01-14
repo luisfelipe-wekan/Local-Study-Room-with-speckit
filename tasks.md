@@ -49,7 +49,7 @@
 - [X] T014 Implement JSON response parser for Gemini output in backend/tools.py
 - [X] T015 Add CORS middleware and health check endpoint in backend/main.py
 - [X] T016 Create App shell with view state management (home/study/quiz) in frontend/src/App.jsx
-- [ ] T017 Create backend API endpoint stubs (/api/files, /api/flashcards, /api/quiz, /api/quiz/grade) in backend/main.py
+- [X] T017 Create backend API endpoint stubs (/health, /api/files, /api/flashcards, /api/quiz, /api/quiz/grade) in backend/routes.py
 - [X] T018 Create API utility functions (fetchFiles, fetchFlashcards, fetchQuiz, submitQuiz) in frontend/src/api.js
 
 **Checkpoint**: Backend can extract PDFs and call Gemini; Frontend can switch views and call API
