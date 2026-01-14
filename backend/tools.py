@@ -230,3 +230,79 @@ Generate 10 flashcards as a JSON array:"""
     except Exception as e:
         print(f"Error generating flashcards: {e}")
         raise
+
+
+async def generate_quiz_with_gemini(text: str) -> List[dict]:
+    """
+    Generate a 10-question multiple choice quiz from the given text using Gemini AI.
+
+    Args:
+        text: The source text to generate quiz questions from
+
+    Returns:
+        List of quiz question dictionaries with 'question', 'options', and 'correct_index'
+    """
+    model = get_gemini_model()
+    if not model:
+        raise ValueError(
+            "Gemini API key not configured. Set GEMINI_API_KEY in .env file."
+        )
+
+    # Truncate text to stay within limits
+    truncated_text = truncate_text(text)
+
+    prompt = f"""Based on the following text, generate exactly 10 multiple choice quiz questions.
+
+Each question should have:
+- "question": A clear question about the content
+- "options": An array of exactly 4 answer choices
+- "correct_index": The index (0-3) of the correct answer
+
+Return ONLY a valid JSON array with no additional text. Example format:
+[
+  {{
+    "question": "What is the main topic of X?",
+    "options": ["Option A", "Option B", "Option C", "Option D"],
+    "correct_index": 2
+  }}
+]
+
+TEXT TO CREATE QUIZ FROM:
+{truncated_text}
+
+Generate 10 quiz questions as a JSON array:"""
+
+    try:
+        response = await model.generate_content_async(prompt)
+        result = parse_json_response(response.text)
+
+        if not result or not isinstance(result, list):
+            raise ValueError("Invalid response format from Gemini")
+
+        # Validate and clean the questions
+        questions = []
+        for item in result[:10]:  # Limit to 10
+            if (
+                isinstance(item, dict)
+                and "question" in item
+                and "options" in item
+                and "correct_index" in item
+                and isinstance(item["options"], list)
+                and len(item["options"]) == 4
+            ):
+                questions.append(
+                    {
+                        "question": str(item["question"]).strip(),
+                        "options": [str(opt).strip() for opt in item["options"]],
+                        "correct_index": int(item["correct_index"]) % 4,
+                    }
+                )
+
+        if len(questions) < 1:
+            raise ValueError("No valid quiz questions generated")
+
+        return questions
+
+    except Exception as e:
+        print(f"Error generating quiz: {e}")
+        raise
