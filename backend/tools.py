@@ -166,3 +166,67 @@ def truncate_text(text: str, max_chars: int = MAX_TEXT_CHARS) -> str:
         truncated = truncated[: last_period + 1]
 
     return truncated + "\n\n[Content truncated for processing...]"
+
+
+async def generate_flashcards_with_gemini(text: str) -> List[dict]:
+    """
+    Generate 10 flashcards from the given text using Gemini AI.
+
+    Args:
+        text: The source text to generate flashcards from
+
+    Returns:
+        List of flashcard dictionaries with 'front' and 'back' keys
+    """
+    model = get_gemini_model()
+    if not model:
+        raise ValueError(
+            "Gemini API key not configured. Set GEMINI_API_KEY in .env file."
+        )
+
+    # Truncate text to stay within limits
+    truncated_text = truncate_text(text)
+
+    prompt = f"""Based on the following text, generate exactly 10 flashcards for studying.
+
+Each flashcard should have:
+- "front": A question, term, or concept (keep it concise)
+- "back": The answer, definition, or explanation
+
+Return ONLY a valid JSON array with no additional text. Example format:
+[
+  {{"front": "What is X?", "back": "X is..."}},
+  {{"front": "Define Y", "back": "Y means..."}}
+]
+
+TEXT TO STUDY:
+{truncated_text}
+
+Generate 10 flashcards as a JSON array:"""
+
+    try:
+        response = await model.generate_content_async(prompt)
+        result = parse_json_response(response.text)
+
+        if not result or not isinstance(result, list):
+            raise ValueError("Invalid response format from Gemini")
+
+        # Validate and clean the flashcards
+        flashcards = []
+        for item in result[:10]:  # Limit to 10
+            if isinstance(item, dict) and "front" in item and "back" in item:
+                flashcards.append(
+                    {
+                        "front": str(item["front"]).strip(),
+                        "back": str(item["back"]).strip(),
+                    }
+                )
+
+        if len(flashcards) < 1:
+            raise ValueError("No valid flashcards generated")
+
+        return flashcards
+
+    except Exception as e:
+        print(f"Error generating flashcards: {e}")
+        raise
