@@ -3,13 +3,44 @@ The Knowledge Extractor - Utility Functions
 PDF extraction, Gemini client, and helper functions.
 """
 
+import os
 from pathlib import Path
-from typing import List, Tuple
+from typing import List, Optional, Tuple
 
+import google.generativeai as genai
+from dotenv import load_dotenv
 from pypdf import PdfReader
+
+# Load environment variables from .env file
+load_dotenv()
 
 # Path to the documents folder (relative to project root)
 DOCUMENTS_PATH = Path(__file__).parent.parent / "documents"
+
+# Gemini configuration
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+GEMINI_MODEL = "gemini-2.0-flash"  # Current Gemini 3 Flash equivalent
+
+# Configure Gemini client
+if GEMINI_API_KEY:
+    genai.configure(api_key=GEMINI_API_KEY)
+
+# Text truncation limit to stay within token limits
+MAX_TEXT_CHARS = 15000
+
+
+def get_gemini_model() -> Optional[genai.GenerativeModel]:
+    """
+    Get configured Gemini model instance.
+
+    Returns:
+        GenerativeModel instance if API key is configured, None otherwise
+    """
+    if not GEMINI_API_KEY:
+        print("Warning: GEMINI_API_KEY not set in .env file")
+        return None
+
+    return genai.GenerativeModel(GEMINI_MODEL)
 
 
 def extract_text_from_pdf(pdf_path: Path) -> str:
