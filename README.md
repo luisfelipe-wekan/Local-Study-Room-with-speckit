@@ -280,6 +280,83 @@ ls -la backend/*.py
 
 ---
 
+## Phase 3 Checkpoint: The Document Browser (MVP) 🎯
+
+**Milestone Achieved:** Users can now see their PDF documents in the application!
+
+Once Phase 3 (Tasks T019-T022) is complete, verify the first functional user story.
+
+### 1. Git History Audit
+
+Verify the document browser was built incrementally.
+
+```bash
+git log -n 4 --oneline
+```
+
+**Success Criteria:** You should see commits for T019 through T022.
+
+### 2. Backend "Live" Scan
+
+Test that the API can discover PDF files.
+
+```bash
+# First, ensure there's at least one PDF in ./documents
+ls -la documents/*.pdf
+
+# Test the file discovery endpoint
+curl http://127.0.0.1:8000/api/files
+```
+
+Or open http://127.0.0.1:8000/docs and test the `/api/files` endpoint.
+
+**Success Criteria:**
+- [ ] Response is a JSON array
+- [ ] Each item has `name` and `size` properties
+- [ ] Your PDF filename(s) appear in the response
+
+### 3. Frontend Integration
+
+Open the React app and verify the FileList component works.
+
+```bash
+cd frontend
+npm run dev
+```
+
+Visit http://localhost:5173 and verify:
+- [ ] The "Documents" card appears on the home page
+- [ ] Your PDF file(s) are listed with names and file sizes
+- [ ] PDF icons with red badges display correctly
+- [ ] Hover effects work on file items
+- [ ] Refresh button appears in the header
+
+### 4. End-to-End Test
+
+Test that new files are detected.
+
+1. Add a new PDF (or copy/rename an existing one) to `./documents`
+2. Click the refresh button in the Documents card (or refresh the browser)
+
+**Success Criteria:**
+- [ ] The new file appears in the list
+- [ ] File count updates (e.g., "2 PDFs" instead of "1 PDF")
+- [ ] File size is displayed correctly
+
+### 5. Empty State Test
+
+Verify the app handles missing documents gracefully.
+
+1. Temporarily move all PDFs out of `./documents`
+2. Refresh the page
+
+**Success Criteria:**
+- [ ] Empty state message appears: "No PDFs Found"
+- [ ] Instructions to add files are displayed
+- [ ] Refresh button is available
+
+---
+
 ## Quick Start
 
 ### Prerequisites
