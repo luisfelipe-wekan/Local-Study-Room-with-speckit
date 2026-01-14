@@ -4,7 +4,8 @@
  */
 
 import { useState } from "react";
-import { BookOpen, Brain, FileText, Home } from "lucide-react";
+import { BookOpen, Brain, Home } from "lucide-react";
+import FileList from "./components/FileList";
 
 // View constants
 const VIEWS = {
@@ -49,18 +50,23 @@ function App() {
         switch (currentView) {
             case VIEWS.HOME:
                 return (
-                    <div className="text-center">
-                        <div className="flex justify-center mb-8">
-                            <FileText className="w-24 h-24 text-amber-500 opacity-50" />
+                    <div>
+                        {/* File List Section */}
+                        <div className="mb-8">
+                            <FileList />
                         </div>
-                        <h2 className="text-2xl font-semibold text-parchment-100 mb-4">
-                            Welcome to The Knowledge Extractor
-                        </h2>
-                        <p className="text-parchment-300 max-w-lg mx-auto mb-8">
-                            Place your PDF documents in the <code className="font-mono bg-ink-700 px-2 py-1 rounded">./documents</code> folder,
-                            then choose a study mode below.
-                        </p>
-                        {renderHomeNav()}
+
+                        {/* Welcome Message */}
+                        <div className="text-center">
+                            <h2 className="text-2xl font-semibold text-parchment-100 mb-4">
+                                Ready to Study?
+                            </h2>
+                            <p className="text-parchment-300 max-w-lg mx-auto mb-8">
+                                Select a study mode below to generate flashcards or take a quiz
+                                based on your PDF documents.
+                            </p>
+                            {renderHomeNav()}
+                        </div>
                     </div>
                 );
 
