@@ -3,9 +3,11 @@ The Knowledge Extractor - Utility Functions
 PDF extraction, Gemini client, and helper functions.
 """
 
+import json
 import os
+import re
 from pathlib import Path
-from typing import List, Optional, Tuple
+from typing import Any, List, Optional, Tuple
 
 import google.generativeai as genai
 from dotenv import load_dotenv
@@ -105,3 +107,62 @@ def scan_all_pdfs() -> str:
             all_text_parts.append(f"--- Document: {pdf_path.name} ---\n{text}")
 
     return "\n\n".join(all_text_parts)
+
+
+def parse_json_response(response_text: str) -> Optional[Any]:
+    """
+    Parse JSON from Gemini response, handling markdown code blocks.
+
+    Gemini often wraps JSON in markdown code blocks like:
+    ```json
+    [...]
+    ```
+
+    This function extracts and parses the JSON regardless of formatting.
+
+    Args:
+        response_text: Raw text response from Gemini
+
+    Returns:
+        Parsed JSON data, or None if parsing fails
+    """
+    if not response_text:
+        return None
+
+    # Try to extract JSON from markdown code block
+    json_match = re.search(r"```(?:json)?\s*([\s\S]*?)\s*```", response_text)
+    if json_match:
+        json_str = json_match.group(1).strip()
+    else:
+        # Try parsing the raw response
+        json_str = response_text.strip()
+
+    try:
+        return json.loads(json_str)
+    except json.JSONDecodeError as e:
+        print(f"Failed to parse JSON response: {e}")
+        print(f"Response text: {response_text[:500]}...")
+        return None
+
+
+def truncate_text(text: str, max_chars: int = MAX_TEXT_CHARS) -> str:
+    """
+    Truncate text to stay within token limits while keeping coherent content.
+
+    Args:
+        text: Text to truncate
+        max_chars: Maximum character count
+
+    Returns:
+        Truncated text with indicator if truncated
+    """
+    if len(text) <= max_chars:
+        return text
+
+    # Truncate at a sentence boundary if possible
+    truncated = text[:max_chars]
+    last_period = truncated.rfind(".")
+    if last_period > max_chars * 0.8:  # Only use if reasonably close to limit
+        truncated = truncated[: last_period + 1]
+
+    return truncated + "\n\n[Content truncated for processing...]"
