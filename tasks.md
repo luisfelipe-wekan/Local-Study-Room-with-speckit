@@ -88,7 +88,7 @@
 - [X] T027 [US2] Implement Previous/Next navigation with progress indicator in frontend/src/components/Flashcard.jsx
 - [X] T028 [US2] Add keyboard arrow support for navigation in frontend/src/components/Flashcard.jsx
 - [X] T029 [US2] Integrate Flashcard into App study view with loading state in frontend/src/App.jsx
-- [ ] T030 [US2] Style Flashcard with Tailwind (card appearance, flip effect, buttons) in frontend/src/components/Flashcard.jsx
+- [X] T030 [US2] Style Flashcard with Tailwind (card appearance, flip effect, buttons) in frontend/src/components/Flashcard.jsx
 
 **Checkpoint**: User Story 2 complete — Flashcards generate and flip correctly
 
