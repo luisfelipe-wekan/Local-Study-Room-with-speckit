@@ -12,6 +12,7 @@ from tools import (
     scan_all_pdfs,
     generate_flashcards_with_gemini,
     generate_quiz_with_gemini,
+    grade_quiz_with_gemini,
 )
 
 # Create router instances
@@ -90,7 +91,35 @@ async def get_quiz():
 @router.post("/quiz/grade", response_model=List[GradedAnswer])
 async def grade_quiz(submission: QuizSubmission):
     """Grade submitted quiz answers using Gemini AI."""
-    # Stub - will be fully implemented in T033-T034
-    raise HTTPException(
-        status_code=501, detail="Quiz grading not yet implemented. Coming in Phase 5."
-    )
+    if not submission.answers:
+        raise HTTPException(status_code=400, detail="No answers provided.")
+
+    # Convert Pydantic models to dicts for the grading function
+    answers_data = [
+        {
+            "question_index": ans.question_index,
+            "selected_index": ans.selected_index,
+            "question": ans.question,
+            "options": ans.options,
+            "correct_index": ans.correct_index,
+        }
+        for ans in submission.answers
+    ]
+
+    try:
+        graded_data = await grade_quiz_with_gemini(answers_data)
+        return [
+            GradedAnswer(
+                question_index=g["question_index"],
+                is_correct=g["is_correct"],
+                feedback=g["feedback"],
+            )
+            for g in graded_data
+        ]
+    except ValueError as e:
+        raise HTTPException(status_code=500, detail=str(e))
+    except Exception as e:
+        raise HTTPException(
+            status_code=500,
+            detail=f"Failed to grade quiz: {str(e)}",
+        )
