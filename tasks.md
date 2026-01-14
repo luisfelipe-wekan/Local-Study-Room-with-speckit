@@ -30,7 +30,7 @@
 - [X] T006 [P] Create HTML entry point with fonts at frontend/index.html
 - [X] T007 [P] Create React entry point at frontend/src/main.jsx
 - [X] T008 [P] Create global styles with Tailwind imports at frontend/src/index.css
-- [ ] T008a [P] Create FastAPI app skeleton with basic health endpoint at backend/main.py
+- [X] T008a [P] Create FastAPI app skeleton with basic health endpoint at backend/main.py
 
 **Checkpoint**: Project structure ready, can install dependencies and run dev servers
 
