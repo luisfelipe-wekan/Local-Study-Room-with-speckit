@@ -7,7 +7,7 @@ from typing import List
 from fastapi import APIRouter, HTTPException
 
 from responses import FileInfo, Flashcard, QuizQuestion, QuizSubmission, GradedAnswer
-from tools import get_pdf_files
+from tools import get_pdf_files, scan_all_pdfs, generate_flashcards_with_gemini
 
 # Create router instances
 router = APIRouter(prefix="/api", tags=["api"])
@@ -30,11 +30,25 @@ async def get_files():
 @router.get("/flashcards", response_model=List[Flashcard])
 async def get_flashcards():
     """Generate flashcards from PDF content using Gemini AI."""
-    # Stub - will be fully implemented in T023-T024
-    raise HTTPException(
-        status_code=501,
-        detail="Flashcard generation not yet implemented. Coming in Phase 4.",
-    )
+    # Get combined text from all PDFs
+    text = scan_all_pdfs()
+
+    if not text:
+        raise HTTPException(
+            status_code=404,
+            detail="No PDF documents found. Add PDFs to the ./documents folder.",
+        )
+
+    try:
+        flashcards_data = await generate_flashcards_with_gemini(text)
+        return [Flashcard(front=fc["front"], back=fc["back"]) for fc in flashcards_data]
+    except ValueError as e:
+        raise HTTPException(status_code=500, detail=str(e))
+    except Exception as e:
+        raise HTTPException(
+            status_code=500,
+            detail=f"Failed to generate flashcards: {str(e)}",
+        )
 
 
 @router.get("/quiz", response_model=List[QuizQuestion])

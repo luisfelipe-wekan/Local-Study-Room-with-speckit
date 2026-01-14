@@ -82,7 +82,7 @@
 ### Implementation for User Story 2
 
 - [X] T023 [US2] Implement generate_flashcards_with_gemini async function in backend/tools.py
-- [ ] T024 [US2] Implement GET /api/flashcards endpoint in backend/routes.py
+- [X] T024 [US2] Implement GET /api/flashcards endpoint in backend/routes.py
 - [ ] T025 [US2] Create Flashcard component with flip animation (CSS 3D transform) in frontend/src/components/Flashcard.jsx
 - [ ] T026 [US2] Add flashcard state management (currentIndex, isFlipped, cards array) in frontend/src/components/Flashcard.jsx
 - [ ] T027 [US2] Implement Previous/Next navigation with progress indicator in frontend/src/components/Flashcard.jsx
