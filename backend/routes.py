@@ -7,7 +7,12 @@ from typing import List
 from fastapi import APIRouter, HTTPException
 
 from responses import FileInfo, Flashcard, QuizQuestion, QuizSubmission, GradedAnswer
-from tools import get_pdf_files, scan_all_pdfs, generate_flashcards_with_gemini
+from tools import (
+    get_pdf_files,
+    scan_all_pdfs,
+    generate_flashcards_with_gemini,
+    generate_quiz_with_gemini,
+)
 
 # Create router instances
 router = APIRouter(prefix="/api", tags=["api"])
@@ -54,11 +59,32 @@ async def get_flashcards():
 @router.get("/quiz", response_model=List[QuizQuestion])
 async def get_quiz():
     """Generate quiz questions from PDF content using Gemini AI."""
-    # Stub - will be fully implemented in T031-T032
-    raise HTTPException(
-        status_code=501,
-        detail="Quiz generation not yet implemented. Coming in Phase 5.",
-    )
+    # Get combined text from all PDFs
+    text = scan_all_pdfs()
+
+    if not text:
+        raise HTTPException(
+            status_code=404,
+            detail="No PDF documents found. Add PDFs to the ./documents folder.",
+        )
+
+    try:
+        quiz_data = await generate_quiz_with_gemini(text)
+        return [
+            QuizQuestion(
+                question=q["question"],
+                options=q["options"],
+                correct_index=q["correct_index"],
+            )
+            for q in quiz_data
+        ]
+    except ValueError as e:
+        raise HTTPException(status_code=500, detail=str(e))
+    except Exception as e:
+        raise HTTPException(
+            status_code=500,
+            detail=f"Failed to generate quiz: {str(e)}",
+        )
 
 
 @router.post("/quiz/grade", response_model=List[GradedAnswer])

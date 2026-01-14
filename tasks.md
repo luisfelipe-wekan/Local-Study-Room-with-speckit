@@ -103,7 +103,7 @@
 ### Implementation for User Story 3
 
 - [X] T031 [US3] Implement generate_quiz_with_gemini async function in backend/tools.py
-- [ ] T032 [US3] Implement GET /api/quiz endpoint in backend/routes.py
+- [X] T032 [US3] Implement GET /api/quiz endpoint in backend/routes.py
 - [ ] T033 [US3] Implement grade_quiz_with_gemini async function for AI feedback in backend/tools.py
 - [ ] T034 [US3] Implement POST /api/quiz/grade endpoint in backend/routes.py
 - [ ] T035 [US3] Create Quiz component displaying all 10 questions with radio options in frontend/src/components/Quiz.jsx
