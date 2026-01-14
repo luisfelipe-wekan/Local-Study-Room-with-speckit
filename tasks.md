@@ -31,7 +31,7 @@
 - [X] T007 [P] Create React entry point at frontend/src/main.jsx
 - [X] T008 [P] Create global styles with Tailwind imports at frontend/src/index.css
 - [X] T008a [P] Create FastAPI app skeleton with basic health endpoint at backend/main.py
-- [ ] T008b [P] Create React App shell placeholder at frontend/src/App.jsx
+- [X] T008b [P] Create React App shell placeholder at frontend/src/App.jsx
 
 **Checkpoint**: Project structure ready, can install dependencies and run dev servers
 
