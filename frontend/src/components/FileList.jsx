@@ -1,0 +1,129 @@
+/**
+ * FileList Component
+ * Displays a list of PDF files detected in the documents folder.
+ * Handles loading and empty states.
+ */
+
+import { useEffect, useState } from "react";
+import { FileText, FolderOpen, RefreshCw } from "lucide-react";
+import { fetchFiles } from "../api";
+
+/**
+ * Format file size in human-readable format
+ * @param {number} bytes - File size in bytes
+ * @returns {string} Formatted size string
+ */
+function formatFileSize(bytes) {
+    if (bytes === 0) return "0 B";
+    const k = 1024;
+    const sizes = ["B", "KB", "MB", "GB"];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + " " + sizes[i];
+}
+
+function FileList() {
+    const [files, setFiles] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    // Fetch files on mount
+    useEffect(() => {
+        loadFiles();
+    }, []);
+
+    const loadFiles = async () => {
+        setIsLoading(true);
+        setError(null);
+        try {
+            const data = await fetchFiles();
+            setFiles(data);
+        } catch (err) {
+            setError(err.message || "Failed to load files");
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    // Loading state
+    if (isLoading) {
+        return (
+            <div className="card p-8 text-center">
+                <div className="spinner mx-auto mb-4"></div>
+                <p className="text-parchment-300">Scanning documents folder...</p>
+            </div>
+        );
+    }
+
+    // Error state
+    if (error) {
+        return (
+            <div className="card p-8 text-center">
+                <p className="text-crimson-400 mb-4">{error}</p>
+                <button onClick={loadFiles} className="btn-secondary inline-flex items-center gap-2">
+                    <RefreshCw className="w-4 h-4" />
+                    Retry
+                </button>
+            </div>
+        );
+    }
+
+    // Empty state
+    if (files.length === 0) {
+        return (
+            <div className="card p-8 text-center">
+                <FolderOpen className="w-16 h-16 text-parchment-300/50 mx-auto mb-4" />
+                <h3 className="text-xl font-semibold text-parchment-100 mb-2">
+                    No PDFs Found
+                </h3>
+                <p className="text-parchment-300 mb-4">
+                    Place PDF files in the{" "}
+                    <code className="font-mono bg-ink-700 px-2 py-1 rounded">./documents</code>{" "}
+                    folder to get started.
+                </p>
+                <button onClick={loadFiles} className="btn-secondary inline-flex items-center gap-2">
+                    <RefreshCw className="w-4 h-4" />
+                    Refresh
+                </button>
+            </div>
+        );
+    }
+
+    // Files list
+    return (
+        <div className="card">
+            <div className="p-4 border-b border-ink-700 flex items-center justify-between">
+                <h3 className="text-lg font-semibold text-parchment-100">
+                    Documents ({files.length})
+                </h3>
+                <button
+                    onClick={loadFiles}
+                    className="text-parchment-300 hover:text-parchment-100 transition-colors"
+                    title="Refresh file list"
+                >
+                    <RefreshCw className="w-4 h-4" />
+                </button>
+            </div>
+            <ul className="divide-y divide-ink-700">
+                {files.map((file, index) => (
+                    <li
+                        key={index}
+                        className="p-4 flex items-center gap-4 hover:bg-ink-700/50 transition-colors"
+                    >
+                        <FileText className="w-8 h-8 text-amber-500 flex-shrink-0" />
+                        <div className="flex-1 min-w-0">
+                            <p className="text-parchment-100 font-medium truncate">
+                                {file.name}
+                            </p>
+                            <p className="text-parchment-300 text-sm">
+                                {formatFileSize(file.size)}
+                            </p>
+                        </div>
+                    </li>
+                ))}
+            </ul>
+        </div>
+    );
+}
+
+export default FileList;
+
