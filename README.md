@@ -157,6 +157,46 @@ studyroom4/
 
 ---
 
+## Phase 1 Checkpoint: Foundation & Environment
+
+Once the implementation of the first phase (Tasks T001-T010) is complete, perform these checks to ensure the workspace is ready for AI feature development.
+
+### 1. Git History Audit
+
+Verify that the implementation agent has maintained a clean, traceable history.
+
+```bash
+git log --oneline
+```
+
+**Success Criteria:** You should see a sequential list of 10 commits (T001 through T010).
+
+### 2. Backend Health Check
+
+Ensure the Python environment and FastAPI skeleton are functional.
+
+```bash
+cd backend
+pip install -r requirements.txt
+uvicorn main:app --reload --port 8000
+```
+
+**Success Criteria:** Visit http://127.0.0.1:8000/docs. The Swagger UI should load without errors.
+
+### 3. Frontend Environment Check
+
+Verify the React + Vite + Tailwind CSS configuration.
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+**Success Criteria:** Visit http://localhost:5173. You should see the application shell with Tailwind styles applied.
+
+---
+
 ## Quick Start
 
 ### Prerequisites
