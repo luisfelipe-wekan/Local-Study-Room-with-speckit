@@ -6,6 +6,7 @@
 import { useState } from "react";
 import { BookOpen, Brain, Home } from "lucide-react";
 import FileList from "./components/FileList";
+import Flashcard from "./components/Flashcard";
 
 // View constants
 const VIEWS = {
@@ -72,10 +73,11 @@ function App() {
 
             case VIEWS.STUDY:
                 return (
-                    <div className="text-center">
-                        <p className="text-parchment-300">
-                            Flashcard component will be integrated here in Phase 4.
-                        </p>
+                    <div>
+                        <h2 className="text-2xl font-semibold text-parchment-100 text-center mb-8">
+                            📚 Study Mode
+                        </h2>
+                        <Flashcard />
                     </div>
                 );
 
