@@ -64,7 +64,7 @@
 
 ### Implementation for User Story 1
 
-- [ ] T019 [US1] Implement GET /api/files endpoint returning PDF metadata in backend/main.py
+- [X] T019 [US1] Implement GET /api/files endpoint returning PDF metadata in backend/routes.py
 - [ ] T020 [US1] Create FileList component with loading and empty states in frontend/src/components/FileList.jsx
 - [ ] T021 [US1] Integrate FileList into App home view in frontend/src/App.jsx
 - [ ] T022 [US1] Style FileList with Tailwind (file icons, sizes, dark theme) in frontend/src/components/FileList.jsx
