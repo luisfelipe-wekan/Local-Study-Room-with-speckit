@@ -81,3 +81,92 @@ body {
 .card {
     @apply bg-ink-800 border border-ink-700 rounded-xl shadow-xl;
 }
+
+/* Skeleton loading animation */
+@keyframes skeleton-pulse {
+
+    0%,
+    100% {
+        opacity: 0.4;
+    }
+
+    50% {
+        opacity: 0.7;
+    }
+}
+
+.skeleton {
+    @apply bg-ink-700 rounded;
+    animation: skeleton-pulse 1.5s ease-in-out infinite;
+}
+
+.skeleton-text {
+    @apply skeleton h-4 w-full mb-2;
+}
+
+.skeleton-text-sm {
+    @apply skeleton h-3 w-3/4;
+}
+
+.skeleton-circle {
+    @apply skeleton rounded-full;
+}
+
+.skeleton-card {
+    @apply skeleton h-32 w-full rounded-xl;
+}
+
+/* Loading dots animation */
+@keyframes loading-dots {
+
+    0%,
+    20% {
+        opacity: 0;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+.loading-dots span {
+    animation: loading-dots 1.4s infinite;
+}
+
+.loading-dots span:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.loading-dots span:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+/* Spinner sizes */
+.spinner-sm {
+    @apply w-5 h-5 border-2 border-ink-600 border-t-amber-500 rounded-full animate-spin;
+}
+
+.spinner-lg {
+    @apply w-12 h-12 border-4 border-ink-600 border-t-amber-500 rounded-full animate-spin;
+}
+
+/* Fade in animation for content */
+@keyframes fade-in {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in {
+    animation: fade-in 0.3s ease-out forwards;
+}
