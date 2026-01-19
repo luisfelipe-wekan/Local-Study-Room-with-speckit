@@ -126,7 +126,7 @@
 - [X] T043 [P] Add loading spinners/skeletons for async operations in frontend/src/index.css
 - [X] T044 [P] Ensure responsive design for mobile in all components
 - [X] T045 [P] Add "Back to Home" navigation from Study and Quiz modes in frontend/src/App.jsx
-- [ ] T046 Verify all success criteria from spec.md pass
+- [X] T046 Verify all success criteria from spec.md pass
 
 ---
 

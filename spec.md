@@ -185,11 +185,11 @@ studyroom4/
 
 ## Success Criteria
 
-- [ ] PDFs in `./documents` are detected and listed
-- [ ] Clicking "Study Mode" generates and displays 10 flashcards
-- [ ] Flashcards can be flipped and navigated
-- [ ] Clicking "Quiz Mode" generates and displays 10 questions
-- [ ] Quiz can be submitted and graded
-- [ ] Each answer receives AI-generated feedback
-- [ ] Application works entirely locally (except Gemini API calls)
+- [X] PDFs in `./documents` are detected and listed
+- [X] Clicking "Study Mode" generates and displays 10 flashcards
+- [X] Flashcards can be flipped and navigated
+- [X] Clicking "Quiz Mode" generates and displays 10 questions
+- [X] Quiz can be submitted and graded
+- [X] Each answer receives AI-generated feedback
+- [X] Application works entirely locally (except Gemini API calls)
 
