@@ -116,18 +116,18 @@ function Quiz() {
     const score = getScore();
 
     return (
-        <div className="max-w-3xl mx-auto">
+        <div className="max-w-3xl mx-auto px-2 sm:px-0">
             {/* Score Summary (after submission) */}
             {results && (
-                <div className="card p-6 mb-8 text-center bg-gradient-to-br from-ink-700 to-ink-800">
-                    <Trophy className="w-12 h-12 text-amber-500 mx-auto mb-4" />
-                    <h3 className="text-2xl font-semibold text-parchment-100 mb-2">
+                <div className="card p-4 sm:p-6 mb-6 sm:mb-8 text-center bg-gradient-to-br from-ink-700 to-ink-800">
+                    <Trophy className="w-10 h-10 sm:w-12 sm:h-12 text-amber-500 mx-auto mb-3 sm:mb-4" />
+                    <h3 className="text-xl sm:text-2xl font-semibold text-parchment-100 mb-2">
                         Quiz Complete!
                     </h3>
-                    <div className="text-4xl font-bold text-amber-500 mb-2">
+                    <div className="text-3xl sm:text-4xl font-bold text-amber-500 mb-2">
                         {score.correct} / {score.total}
                     </div>
-                    <p className="text-parchment-300 mb-4">
+                    <p className="text-parchment-300 mb-4 text-sm sm:text-base">
                         You scored{" "}
                         <span
                             className={
@@ -143,7 +143,7 @@ function Quiz() {
                     </p>
                     <button
                         onClick={loadQuiz}
-                        className="btn-primary inline-flex items-center gap-2"
+                        className="btn-primary inline-flex items-center gap-2 text-sm sm:text-base"
                     >
                         <RotateCcw className="w-4 h-4" />
                         Take New Quiz
@@ -169,7 +169,7 @@ function Quiz() {
             )}
 
             {/* Questions */}
-            <div className="space-y-6">
+            <div className="space-y-4 sm:space-y-6">
                 {questions.map((question, qIdx) => {
                     const result = results?.find((r) => r.question_index === qIdx);
                     const selectedAnswer = answers[qIdx];
@@ -177,32 +177,32 @@ function Quiz() {
                     return (
                         <div
                             key={qIdx}
-                            className={`card p-6 ${result
-                                    ? result.is_correct
-                                        ? "border-emerald-500/50"
-                                        : "border-crimson-500/50"
-                                    : ""
+                            className={`card p-4 sm:p-6 ${result
+                                ? result.is_correct
+                                    ? "border-emerald-500/50"
+                                    : "border-crimson-500/50"
+                                : ""
                                 }`}
                         >
                             {/* Question header */}
-                            <div className="flex items-start gap-4 mb-4">
-                                <span className="flex-shrink-0 w-8 h-8 bg-amber-500/20 text-amber-400 rounded-full flex items-center justify-center font-mono text-sm">
+                            <div className="flex items-start gap-3 sm:gap-4 mb-3 sm:mb-4">
+                                <span className="flex-shrink-0 w-7 h-7 sm:w-8 sm:h-8 bg-amber-500/20 text-amber-400 rounded-full flex items-center justify-center font-mono text-xs sm:text-sm">
                                     {qIdx + 1}
                                 </span>
-                                <p className="text-lg text-parchment-100 flex-1">
+                                <p className="text-base sm:text-lg text-parchment-100 flex-1">
                                     {question.question}
                                 </p>
                                 {result && (
                                     result.is_correct ? (
-                                        <CheckCircle className="w-6 h-6 text-emerald-400 flex-shrink-0" />
+                                        <CheckCircle className="w-5 h-5 sm:w-6 sm:h-6 text-emerald-400 flex-shrink-0" />
                                     ) : (
-                                        <XCircle className="w-6 h-6 text-crimson-400 flex-shrink-0" />
+                                        <XCircle className="w-5 h-5 sm:w-6 sm:h-6 text-crimson-400 flex-shrink-0" />
                                     )
                                 )}
                             </div>
 
                             {/* Options */}
-                            <div className="space-y-2 ml-12">
+                            <div className="space-y-2 ml-0 sm:ml-12">
                                 {question.options.map((option, oIdx) => {
                                     const isSelected = selectedAnswer === oIdx;
                                     const isCorrect = question.correct_index === oIdx;
@@ -215,23 +215,23 @@ function Quiz() {
                                             onClick={() => selectAnswer(qIdx, oIdx)}
                                             disabled={!!results}
                                             className={`w-full text-left p-3 rounded-lg border transition-all duration-200 ${showCorrect
-                                                    ? "bg-emerald-500/20 border-emerald-500 text-emerald-100"
-                                                    : showIncorrect
-                                                        ? "bg-crimson-500/20 border-crimson-500 text-crimson-100"
-                                                        : isSelected
-                                                            ? "bg-amber-500/20 border-amber-500 text-parchment-100"
-                                                            : "bg-ink-700/50 border-ink-600 text-parchment-200 hover:border-ink-500 hover:bg-ink-700"
+                                                ? "bg-emerald-500/20 border-emerald-500 text-emerald-100"
+                                                : showIncorrect
+                                                    ? "bg-crimson-500/20 border-crimson-500 text-crimson-100"
+                                                    : isSelected
+                                                        ? "bg-amber-500/20 border-amber-500 text-parchment-100"
+                                                        : "bg-ink-700/50 border-ink-600 text-parchment-200 hover:border-ink-500 hover:bg-ink-700"
                                                 } ${results ? "cursor-default" : "cursor-pointer"}`}
                                         >
                                             <span className="flex items-center gap-3">
                                                 <span
                                                     className={`w-6 h-6 rounded-full border-2 flex items-center justify-center text-xs font-mono ${showCorrect
-                                                            ? "border-emerald-400 bg-emerald-500 text-white"
-                                                            : showIncorrect
-                                                                ? "border-crimson-400 bg-crimson-500 text-white"
-                                                                : isSelected
-                                                                    ? "border-amber-400 bg-amber-500 text-ink-900"
-                                                                    : "border-ink-500"
+                                                        ? "border-emerald-400 bg-emerald-500 text-white"
+                                                        : showIncorrect
+                                                            ? "border-crimson-400 bg-crimson-500 text-white"
+                                                            : isSelected
+                                                                ? "border-amber-400 bg-amber-500 text-ink-900"
+                                                                : "border-ink-500"
                                                         }`}
                                                 >
                                                     {String.fromCharCode(65 + oIdx)}
@@ -246,12 +246,12 @@ function Quiz() {
                             {/* Feedback (after submission) */}
                             {result && (
                                 <div
-                                    className={`mt-4 ml-12 p-3 rounded-lg ${result.is_correct
-                                            ? "bg-emerald-500/10 text-emerald-200"
-                                            : "bg-crimson-500/10 text-crimson-200"
+                                    className={`mt-3 sm:mt-4 ml-0 sm:ml-12 p-3 rounded-lg ${result.is_correct
+                                        ? "bg-emerald-500/10 text-emerald-200"
+                                        : "bg-crimson-500/10 text-crimson-200"
                                         }`}
                                 >
-                                    <p className="text-sm">{result.feedback}</p>
+                                    <p className="text-xs sm:text-sm">{result.feedback}</p>
                                 </div>
                             )}
                         </div>
@@ -261,29 +261,29 @@ function Quiz() {
 
             {/* Submit button (before submission) */}
             {!results && (
-                <div className="mt-8 text-center">
+                <div className="mt-6 sm:mt-8 text-center">
                     {error && (
-                        <p className="text-crimson-400 mb-4">{error}</p>
+                        <p className="text-crimson-400 mb-4 text-sm">{error}</p>
                     )}
                     <button
                         onClick={handleSubmit}
                         disabled={!allAnswered || isSubmitting}
-                        className="btn-primary inline-flex items-center gap-2 px-8 py-4 text-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="btn-primary inline-flex items-center gap-2 px-6 py-3 sm:px-8 sm:py-4 text-base sm:text-lg disabled:opacity-50 disabled:cursor-not-allowed w-full sm:w-auto"
                     >
                         {isSubmitting ? (
                             <>
-                                <Loader2 className="w-5 h-5 animate-spin" />
+                                <Loader2 className="w-4 h-4 sm:w-5 sm:h-5 animate-spin" />
                                 Grading...
                             </>
                         ) : (
                             <>
-                                <Send className="w-5 h-5" />
+                                <Send className="w-4 h-4 sm:w-5 sm:h-5" />
                                 Submit Quiz
                             </>
                         )}
                     </button>
                     {!allAnswered && (
-                        <p className="text-parchment-300/50 text-sm mt-2">
+                        <p className="text-parchment-300/50 text-xs sm:text-sm mt-2">
                             Answer all questions to submit
                         </p>
                     )}

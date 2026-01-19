@@ -117,10 +117,10 @@ function Flashcard() {
     const currentCard = cards[currentIndex];
 
     return (
-        <div className="max-w-2xl mx-auto">
+        <div className="max-w-2xl mx-auto px-2 sm:px-0">
             {/* Progress indicator */}
-            <div className="mb-6 text-center">
-                <span className="text-parchment-300 font-mono text-sm">
+            <div className="mb-4 sm:mb-6 text-center">
+                <span className="text-parchment-300 font-mono text-xs sm:text-sm">
                     Card {currentIndex + 1} of {cards.length}
                 </span>
                 <div className="mt-2 h-1 bg-ink-700 rounded-full overflow-hidden">
@@ -133,20 +133,20 @@ function Flashcard() {
 
             {/* Flashcard */}
             <div
-                className="flip-card h-80 cursor-pointer mb-6"
+                className="flip-card h-64 sm:h-80 cursor-pointer mb-4 sm:mb-6"
                 onClick={flipCard}
             >
                 <div className={`flip-card-inner ${isFlipped ? "flipped" : ""}`}>
                     {/* Front */}
-                    <div className="flip-card-front card p-8 flex items-center justify-center bg-gradient-to-br from-ink-700 to-ink-800">
-                        <p className="text-xl text-parchment-100 text-center leading-relaxed">
+                    <div className="flip-card-front card p-4 sm:p-8 flex items-center justify-center bg-gradient-to-br from-ink-700 to-ink-800">
+                        <p className="text-base sm:text-xl text-parchment-100 text-center leading-relaxed">
                             {currentCard.front}
                         </p>
                     </div>
 
                     {/* Back */}
-                    <div className="flip-card-back card p-8 flex items-center justify-center bg-gradient-to-br from-amber-500/20 to-ink-800">
-                        <p className="text-xl text-parchment-100 text-center leading-relaxed">
+                    <div className="flip-card-back card p-4 sm:p-8 flex items-center justify-center bg-gradient-to-br from-amber-500/20 to-ink-800">
+                        <p className="text-base sm:text-xl text-parchment-100 text-center leading-relaxed">
                             {currentCard.back}
                         </p>
                     </div>
@@ -154,33 +154,34 @@ function Flashcard() {
             </div>
 
             {/* Flip hint */}
-            <p className="text-center text-parchment-300/50 text-sm mb-6">
-                Click card or press Space to flip
+            <p className="text-center text-parchment-300/50 text-xs sm:text-sm mb-4 sm:mb-6">
+                Tap card or press Space to flip
             </p>
 
             {/* Navigation buttons */}
-            <div className="flex items-center justify-center gap-4">
+            <div className="flex items-center justify-center gap-2 sm:gap-4">
                 <button
                     onClick={goToPrevious}
                     disabled={currentIndex === 0}
-                    className="btn-secondary flex items-center gap-2 disabled:opacity-30 disabled:cursor-not-allowed"
+                    className="btn-secondary flex items-center gap-1 sm:gap-2 py-2 px-3 sm:py-3 sm:px-6 text-sm sm:text-base disabled:opacity-30 disabled:cursor-not-allowed"
                 >
-                    <ChevronLeft className="w-5 h-5" />
-                    Previous
+                    <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5" />
+                    <span className="hidden sm:inline">Previous</span>
+                    <span className="sm:hidden">Prev</span>
                 </button>
 
                 <button
                     onClick={goToNext}
                     disabled={currentIndex === cards.length - 1}
-                    className="btn-primary flex items-center gap-2 disabled:opacity-30 disabled:cursor-not-allowed"
+                    className="btn-primary flex items-center gap-1 sm:gap-2 py-2 px-3 sm:py-3 sm:px-6 text-sm sm:text-base disabled:opacity-30 disabled:cursor-not-allowed"
                 >
                     Next
-                    <ChevronRight className="w-5 h-5" />
+                    <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5" />
                 </button>
             </div>
 
-            {/* Keyboard hint */}
-            <p className="text-center text-parchment-300/50 text-xs mt-4">
+            {/* Keyboard hint - hide on mobile */}
+            <p className="hidden sm:block text-center text-parchment-300/50 text-xs mt-4">
                 Use ← → arrow keys to navigate
             </p>
         </div>

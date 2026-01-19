@@ -29,19 +29,19 @@ function App() {
 
     // Render navigation buttons for home view
     const renderHomeNav = () => (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-2xl mx-auto mt-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 max-w-2xl mx-auto mt-8 sm:mt-12">
             <button
                 onClick={() => navigateTo(VIEWS.STUDY)}
-                className="btn-primary flex items-center justify-center gap-3 py-6 text-lg"
+                className="btn-primary flex items-center justify-center gap-3 py-4 sm:py-6 text-base sm:text-lg"
             >
-                <BookOpen className="w-6 h-6" />
+                <BookOpen className="w-5 h-5 sm:w-6 sm:h-6" />
                 Study Mode
             </button>
             <button
                 onClick={() => navigateTo(VIEWS.QUIZ)}
-                className="btn-primary flex items-center justify-center gap-3 py-6 text-lg"
+                className="btn-primary flex items-center justify-center gap-3 py-4 sm:py-6 text-base sm:text-lg"
             >
-                <Brain className="w-6 h-6" />
+                <Brain className="w-5 h-5 sm:w-6 sm:h-6" />
                 Quiz Mode
             </button>
         </div>
@@ -100,13 +100,13 @@ function App() {
     return (
         <div className="min-h-screen bg-ink-900 text-parchment-100 font-serif">
             {/* Header */}
-            <header className="p-6 border-b border-ink-700">
-                <div className="max-w-4xl mx-auto flex items-center justify-between">
-                    <div>
-                        <h1 className="text-3xl font-semibold text-amber-500">
+            <header className="p-4 sm:p-6 border-b border-ink-700">
+                <div className="max-w-4xl mx-auto flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                    <div className="min-w-0 flex-1">
+                        <h1 className="text-2xl sm:text-3xl font-semibold text-amber-500 truncate">
                             The Knowledge Extractor
                         </h1>
-                        <p className="text-parchment-300 mt-1">
+                        <p className="text-parchment-300 mt-1 text-sm sm:text-base">
                             Transform your PDFs into interactive study materials
                         </p>
                     </div>
@@ -115,7 +115,7 @@ function App() {
                     {currentView !== VIEWS.HOME && (
                         <button
                             onClick={() => navigateTo(VIEWS.HOME)}
-                            className="btn-secondary flex items-center gap-2"
+                            className="btn-secondary flex items-center gap-2 text-sm sm:text-base py-2 px-4 sm:py-3 sm:px-6"
                         >
                             <Home className="w-4 h-4" />
                             Home
@@ -125,7 +125,7 @@ function App() {
             </header>
 
             {/* Main Content */}
-            <main className="p-6 max-w-4xl mx-auto">
+            <main className="p-4 sm:p-6 max-w-4xl mx-auto pb-24">
                 {/* Error display with retry */}
                 {error && (
                     <div className="mb-6 p-6 bg-crimson-500/10 border border-crimson-500/50 rounded-xl">

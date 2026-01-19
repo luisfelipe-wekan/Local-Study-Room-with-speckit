@@ -122,9 +122,9 @@
 
 **Purpose**: Error handling, UX improvements, final touches
 
-- [ ] T042 [P] Add error states with retry buttons for all API calls in frontend/src/App.jsx
-- [ ] T043 [P] Add loading spinners/skeletons for async operations in frontend/src/index.css
-- [ ] T044 [P] Ensure responsive design for mobile in all components
+- [X] T042 [P] Add error states with retry buttons for all API calls in frontend/src/App.jsx
+- [X] T043 [P] Add loading spinners/skeletons for async operations in frontend/src/index.css
+- [X] T044 [P] Ensure responsive design for mobile in all components
 - [ ] T045 [P] Add "Back to Home" navigation from Study and Quiz modes in frontend/src/App.jsx
 - [ ] T046 Verify all success criteria from spec.md pass
 
