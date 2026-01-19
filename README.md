@@ -171,6 +171,41 @@ If you see only 1-2 commits for many tasks, the AI didn't follow commit instruct
 
 ---
 
+## 📌 A Note on Branching
+
+**This project does NOT use feature branches.** All commits were made directly to `main`.
+
+### Why No Branches?
+
+1. **Simplicity** — For a solo learning project, branching adds overhead without significant benefit
+2. **Focus on Spec-Kit** — The goal was to demonstrate the specification workflow, not git branching strategies
+3. **Not requested** — Cursor only does what you explicitly ask for
+
+### Want Branching in Your Project?
+
+You can add branching instructions to your implementation prompt:
+
+```
+/speckit.implement Phase 4
+
+Before starting:
+1. Create branch: git checkout -b feature/phase-4-flashcards
+
+After completing all tasks in the phase:
+2. Merge to main: git checkout main && git merge feature/phase-4-flashcards
+```
+
+### Production Recommendation
+
+For team projects or production code, consider:
+- One branch per phase or user story
+- Pull requests for code review
+- Protected `main` branch
+
+But for learning Spec-Kit, direct-to-main works fine!
+
+---
+
 ## Project Structure
 
 ```
