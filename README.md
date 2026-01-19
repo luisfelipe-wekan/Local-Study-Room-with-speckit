@@ -2,9 +2,25 @@
 
 > A local-first study aid built entirely with **Spec-Kit** — an AI-assisted specification-driven development workflow.
 
-## About This Project
+---
 
-This project demonstrates how to build a complete application using Spec-Kit commands in Cursor IDE. The entire development process—from specification to implementation—is guided by structured commands that ensure consistency, traceability, and clean git history.
+## 🎓 This Is a Learning Project
+
+**Primary Purpose:** Learn how to use **Spec-Kit**, a specification-driven development methodology for AI-assisted coding with Cursor IDE.
+
+This repository is **not** about the flashcard app itself—it's a complete, working example of the Spec-Kit workflow from start to finish. By studying this project, you'll learn:
+
+1. **How to structure AI prompts** for specification (`/speckit.specify`)
+2. **How to plan before coding** with architecture documents (`/speckit.plan`)
+3. **How to break work into atomic tasks** with dependencies (`/speckit.tasks`)
+4. **How to guide Cursor through implementation** one task at a time
+5. **How to maintain clean git history** with one commit per task
+
+> 💡 **Key Insight:** Cursor/AI does NOT automatically commit after each task. You must explicitly instruct it to do so. See [Prompting for Commits](#prompting-for-commits) below.
+
+---
+
+## About the App
 
 **What it does:**
 - Scans a local `./documents` folder for PDF files
@@ -87,19 +103,29 @@ Executes tasks from `tasks.md` phase by phase:
 
 ---
 
-## Prompting for Commits
+## ⚠️ Prompting for Commits
 
-**Important:** The default `/speckit.implement` command does NOT automatically create git commits. You must explicitly instruct Cursor to commit after each task.
+> **CRITICAL:** Cursor does NOT automatically create git commits. You MUST explicitly tell it to commit after each task, or you'll lose the traceable history that makes Spec-Kit valuable.
 
-### Recommended Prompt
+### The Problem
 
-When running implementation, add this instruction:
+By default, when you run `/speckit.implement`, Cursor will:
+- ✅ Create/modify files
+- ✅ Mark tasks as complete in `tasks.md`
+- ❌ **NOT** create git commits
+
+Without explicit instructions, you'll end up with one giant commit containing all your changes—defeating the purpose of atomic tasks.
+
+### The Solution
+
+Always include commit instructions in your prompt:
 
 ```
 /speckit.implement
 
-After each task, make a git commit with the message format:
-"implement T001 - <description of what happened in that task>"
+After completing EACH task:
+1. Mark it as [X] in tasks.md
+2. Run: git add <files> && git commit -m "implement TXXX - <description>"
 ```
 
 ### Example Session
@@ -110,22 +136,38 @@ User: /speckit.implement for T001 only, commit after completion
 Cursor: 
 1. Creates documents/README.md
 2. Marks T001 as [X] in tasks.md
-3. Runs: git add ... && git commit -m "implement T001 - Create documents folder with placeholder README"
+3. Runs: git add documents/README.md tasks.md && git commit -m "implement T001 - Create documents folder with placeholder README"
 ```
 
 ### For Multiple Tasks
 
 ```
-User: Execute Phase 1 (T001-T008), commit after EACH task
+User: Execute Phase 1 (T001-T010), commit after EACH task
 
 Cursor:
-- T001 → commit
-- T002 → commit
-- T003 → commit
-- ... and so on
+- T001 → files created → git commit
+- T002 → files created → git commit
+- T003 → files created → git commit
+- ... continues for each task
 ```
 
-This creates a clean, traceable git history where each task is a single commit.
+### Verify Your History
+
+After implementation, always check your git log:
+
+```bash
+git log --oneline
+```
+
+You should see **one commit per task**, like:
+```
+abc1234 implement T010 - Create React App shell placeholder
+def5678 implement T009 - Create FastAPI app skeleton
+ghi9012 implement T008 - Create global styles with Tailwind
+...
+```
+
+If you see only 1-2 commits for many tasks, the AI didn't follow commit instructions—you'll need to be more explicit next time.
 
 ---
 
@@ -619,7 +661,36 @@ Verify that starting a new quiz resets all state.
 ### Prerequisites
 - Python 3.10+
 - Node.js 18+
-- Gemini API key
+- Gemini API key (free tier available)
+
+### 🔑 Getting Your Gemini API Key
+
+The app uses Google's Gemini AI for generating flashcards and quizzes. Here's how to get your free API key:
+
+1. **Go to Google AI Studio**
+   
+   Visit: https://aistudio.google.com/app/apikey
+
+2. **Sign in with Google**
+   
+   Use any Google account (personal Gmail works fine)
+
+3. **Create API Key**
+   
+   - Click **"Create API Key"**
+   - Select **"Create API key in new project"** (or use existing)
+   - Copy the generated key (starts with `AIza...`)
+
+4. **Save to `.env` file**
+   
+   ```bash
+   cd backend
+   echo "GEMINI_API_KEY=AIzaSy..." > .env
+   ```
+
+> 💡 **Free Tier:** Gemini offers a generous free tier (60 requests/minute). Perfect for learning and personal projects.
+
+> ⚠️ **Security:** Never commit your `.env` file to git! It's already in `.gitignore`.
 
 ### Backend
 ```bash
