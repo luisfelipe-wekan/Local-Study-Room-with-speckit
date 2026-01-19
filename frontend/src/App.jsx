@@ -4,7 +4,7 @@
  */
 
 import { useState } from "react";
-import { BookOpen, Brain, Home } from "lucide-react";
+import { BookOpen, Brain, Home, RefreshCw, AlertTriangle } from "lucide-react";
 import FileList from "./components/FileList";
 import Flashcard from "./components/Flashcard";
 import Quiz from "./components/Quiz";
@@ -126,10 +126,27 @@ function App() {
 
             {/* Main Content */}
             <main className="p-6 max-w-4xl mx-auto">
-                {/* Error display */}
+                {/* Error display with retry */}
                 {error && (
-                    <div className="mb-6 p-4 bg-crimson-500/20 border border-crimson-500 rounded-lg text-crimson-400">
-                        {error}
+                    <div className="mb-6 p-6 bg-crimson-500/10 border border-crimson-500/50 rounded-xl">
+                        <div className="flex items-start gap-4">
+                            <AlertTriangle className="w-6 h-6 text-crimson-400 flex-shrink-0 mt-0.5" />
+                            <div className="flex-1">
+                                <h3 className="text-crimson-400 font-semibold mb-1">Something went wrong</h3>
+                                <p className="text-crimson-300/80 text-sm mb-4">{error}</p>
+                                <button
+                                    onClick={() => {
+                                        setError(null);
+                                        // Reload the page to reset state
+                                        window.location.reload();
+                                    }}
+                                    className="btn-secondary inline-flex items-center gap-2 text-sm py-2"
+                                >
+                                    <RefreshCw className="w-4 h-4" />
+                                    Retry
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 )}
 
